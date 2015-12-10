@@ -1,4 +1,5 @@
-#include "../header/structurs.h"
+#include "math_pack.h"
+
 #define M_PI 3.14159265358979323846
 
 double factorial(double f) {
@@ -43,9 +44,7 @@ void multiplyScalar7x1(double scalar, MatrixMath7x1_s* A) {
   }
 }
 
-void multiplyMatrices(MatrixMath_s* A,
-                               MatrixMath_s* B,
-                               MatrixMath_s* resultMatrix) {
+void multiplyMatrices(MatrixMath_s* A, MatrixMath_s* B, MatrixMath_s* resultMatrix) {
   int i, j, k;
   if ((*A).col == (*B).row) {
     for (i = 0; i <3; i++) {
@@ -123,9 +122,7 @@ void multiplyMatrices9x6and9x9(MatrixMath9x6_s* A, MatrixMath9x9_s* B, MatrixMat
   }
 }
 
-void multiplyMatrixByQuaternion(MatrixMath4x4_s* A,
-                                               Quaternion_s* q,
-                                               Quaternion_s* result) {
+void multiplyMatrixByQuaternion(MatrixMath4x4_s* A, Quaternion_s* q, Quaternion_s* result) {
   int i, j;
   for (i = 0; i < 4; i++) {
     (*result).arr[i]  = 0.0;

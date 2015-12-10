@@ -1,9 +1,9 @@
-#include "math_pack.h"
+#include "header/math_pack.h"
 
 #define M_PI 3.14159265358979323846
 
 double factorial(double f) {
-  if (f == 0)
+    if (f == 0)
     return 1;
   return(f * factorial(f - 1));
 }
@@ -44,85 +44,103 @@ void multiplyScalar7x1(double scalar, MatrixMath7x1_s* matrixA) {
   }
 }
 
-void multiplyMatrices(MatrixMath_s* matrixA, MatrixMath_s* matrixB, MatrixMath_s* resultMatrix) {
+void multiplyMatrices(MatrixMath_s* matrixA, MatrixMath_s* matrixB,
+                      MatrixMath_s* resultMatrix) {
   int i, j, k;
   if ((*matrixA).col == (*matrixB).row) {
     for (i = 0; i <3; i++) {
       for (j = 0; j < 3; j++) {
         (*resultMatrix).arr[i * 3 + j]  = 0.0;
         for (k = 0; k < 3; k++)
-          (*resultMatrix).arr[i * 3 + j]  += (*matrixA).arr[i * 3 + k] * (*matrixB).arr[k * 3 + j];
+          (*resultMatrix).arr[i * 3 + j]  += (*matrixA).arr[i * 3 + k]
+                                              * (*matrixB).arr[k * 3 + j];
       }
     }
   }
 }
 
-void multiplyMatrices6x6(MatrixMath6x6_s* matrixA, MatrixMath6x6_s* matrixB, MatrixMath6x6_s* resultMatrix) {
+void multiplyMatrices6x6(MatrixMath6x6_s* matrixA, MatrixMath6x6_s* matrixB,
+                         MatrixMath6x6_s* resultMatrix) {
   int i, j, k;
   if ((*matrixA).col == (*matrixB).row) {
     for (i = 0; i <6; i++) {
       for (j = 0; j < 6; j++) {
         (*resultMatrix).arr[i * 6 + j]  = 0.0;
         for (k = 0; k < 6; k++)
-          (*resultMatrix).arr[i * 6 + j]  += (*matrixA).arr[i * 6 + k] * (*matrixB).arr[k * 6 + j];
+          (*resultMatrix).arr[i * 6 + j]  += (*matrixA).arr[i * 6 + k]
+                                              * (*matrixB).arr[k * 6 + j];
       }
     }
   }
 }
 
-void multiplyMatrices9x6and6x6(MatrixMath9x6_s* matrixA, MatrixMath6x6_s* matrixB, MatrixMath9x6_s* resultMatrix) {
+void multiplyMatrices9x6and6x6(MatrixMath9x6_s* matrixA,
+                               MatrixMath6x6_s* matrixB,
+                               MatrixMath9x6_s* resultMatrix) {
   int i, j, k;
   if ((*matrixA).col == (*matrixB).row) {
     for (i = 0; i <9; i++) {
       for (j = 0; j < 6; j++) {
         (*resultMatrix).arr[i * 9 + j]  = 0.0;
         for (k = 0; k < 6; k++)
-          (*resultMatrix).arr[i * 9 + j]  += (*matrixA).arr[i * 9 + k] * (*matrixB).arr[k * 6 + j];
+          (*resultMatrix).arr[i * 9 + j]  += (*matrixA).arr[i * 9 + k]
+                                              * (*matrixB).arr[k * 6 + j];
       }
     }
   }
 }
 
-void multiplyMatrices6x6and9x6(MatrixMath6x6_s* matrixA, MatrixMath9x6_s* matrixB, MatrixMath9x6_s* resultMatrix) {
+void multiplyMatrices6x6and9x6(MatrixMath6x6_s* matrixA,
+                               MatrixMath9x6_s* matrixB,
+                               MatrixMath9x6_s* resultMatrix) {
   int i, j, k;
   if ((*matrixA).col == (*matrixB).row) {
     for (i = 0; i <6; i++) {
       for (j = 0; j < 9; j++) {
         (*resultMatrix).arr[i * 6 + j]  = 0.0;
         for (k = 0; k < 6; k++)
-          (*resultMatrix).arr[i * 9 + j]  += (*matrixA).arr[i * 9 + k] * (*matrixB).arr[k * 6 + j];
+          (*resultMatrix).arr[i * 9 + j]  += (*matrixA).arr[i * 9 + k]
+                                              * (*matrixB).arr[k * 6 + j];
       }
     }
   }
 }
 
-void multiplyMatrices9x6and6x9(MatrixMath9x6_s* matrixA, MatrixMath9x6_s* matrixB, MatrixMath9x9_s* resultMatrix) {
+void multiplyMatrices9x6and6x9(MatrixMath9x6_s* matrixA,
+                               MatrixMath9x6_s* matrixB,
+                               MatrixMath9x9_s* resultMatrix) {
   int i, j, k;
   if ((*matrixA).col == (*matrixB).row) {
     for (i = 0; i <9; i++) {
       for (j = 0; j < 6; j++) {
         (*resultMatrix).arr[i * 9 + j]  = 0.0;
         for (k = 0; k < 9; k++)
-          (*resultMatrix).arr[i * 9 + j]  += (*matrixA).arr[i * 9 + k] * (*matrixB).arr[k * 9 + j];
+          (*resultMatrix).arr[i * 9 + j]  += (*matrixA).arr[i * 9 + k]
+                                              * (*matrixB).arr[k * 9 + j];
       }
     }
   }
 }
 
-void multiplyMatrices9x6and9x9(MatrixMath9x6_s* matrixA, MatrixMath9x9_s* matrixB, MatrixMath9x6_s* resultMatrix) {
+void multiplyMatrices9x6and9x9(MatrixMath9x6_s* matrixA,
+                               MatrixMath9x9_s* matrixB,
+                               MatrixMath9x6_s* resultMatrix) {
   int i, j, k;
   if ((*matrixA).col == (*matrixB).row) {
     for (i = 0; i <6; i++) {
       for (j = 0; j < 9; j++) {
         (*resultMatrix).arr[i * 6 + j]  = 0.0;
         for (k = 0; k < 6; k++)
-          (*resultMatrix).arr[i * 9 + j]  += (*matrixA).arr[i * 9 + k] * (*matrixB).arr[k * 6 + j];
+          (*resultMatrix).arr[i * 9 + j]  += (*matrixA).arr[i * 9 + k]
+                                              * (*matrixB).arr[k * 6 + j];
       }
     }
   }
 }
 
-void multiplyMatrixmatrixByQuaternion(MatrixMath4x4_s* matrixA, Quaternion_s* q, Quaternion_s* result) {
+void multiplyMatrixmatrixByQuaternion(MatrixMath4x4_s* matrixA,
+                                      Quaternion_s* q,
+                                      Quaternion_s* result) {
   int i, j;
   for (i = 0; i < 4; i++) {
     (*result).arr[i]  = 0.0;
@@ -132,54 +150,65 @@ void multiplyMatrixmatrixByQuaternion(MatrixMath4x4_s* matrixA, Quaternion_s* q,
   }
 }
 
-void addingMatrices(MatrixMath_s* matrixA, MatrixMath_s* matrixB, MatrixMath_s* resultMatrix) {
+void addingMatrices(MatrixMath_s* matrixA, MatrixMath_s* matrixB,
+                    MatrixMath_s* resultMatrix) {
   int i, j;
   for (i = 0; i <3; i++) {
     for (j = 0; j < 3; j++) {
-      (*resultMatrix).arr[i * 3 + j]  = (*matrixA).arr[i * 3 + j] + (*matrixB).arr[i * 3 + j];
+      (*resultMatrix).arr[i * 3 + j]  = (*matrixA).arr[i * 3 + j]
+                                        + (*matrixB).arr[i * 3 + j];
     }
   }
 }
 
-void addingMatrices6x6(MatrixMath6x6_s* matrixA, MatrixMath6x6_s* matrixB, MatrixMath6x6_s* resultMatrix) {
+void addingMatrices6x6(MatrixMath6x6_s* matrixA, MatrixMath6x6_s* matrixB,
+                       MatrixMath6x6_s* resultMatrix) {
   int i, j;
   for (i = 0; i <6; i++) {
     for (j = 0; j < 6; j++) {
-      (*resultMatrix).arr[i * 6 + j]  = (*matrixA).arr[i * 6 + j] + (*matrixB).arr[i * 6 + j];
+      (*resultMatrix).arr[i * 6 + j]  = (*matrixA).arr[i * 6 + j]
+                                        + (*matrixB).arr[i * 6 + j];
     }
   }
 }
 
-void addingMatrices9x9(MatrixMath9x9_s* matrixA, MatrixMath9x9_s* matrixB, MatrixMath9x9_s* resultMatrix) {
+void addingMatrices9x9(MatrixMath9x9_s* matrixA, MatrixMath9x9_s* matrixB,
+                       MatrixMath9x9_s* resultMatrix) {
   int i, j;
   for (i = 0; i <9; i++) {
     for (j = 0; j < 9; j++) {
-      (*resultMatrix).arr[i * 9 + j]  = (*matrixA).arr[i * 9 + j] + (*matrixB).arr[i * 9 + j];
+      (*resultMatrix).arr[i * 9 + j]  = (*matrixA).arr[i * 9 + j]
+                                        + (*matrixB).arr[i * 9 + j];
     }
   }
 }
 
-void addingMatrices7x1(MatrixMath7x1_s* matrixA, MatrixMath7x1_s* matrixB, MatrixMath7x1_s* resultMatrix) {
+void addingMatrices7x1(MatrixMath7x1_s* matrixA, MatrixMath7x1_s* matrixB,
+                       MatrixMath7x1_s* resultMatrix) {
   int i;
   for (i = 0; i <7; i++) {
     (*resultMatrix).arr[i]  = (*matrixA).arr[i] + (*matrixB).arr[i];
   }
 }
 
-void subtractionMatrices(MatrixMath_s* matrixA, MatrixMath_s* matrixB, MatrixMath_s* resultMatrix) {
+void subtractionMatrices(MatrixMath_s* matrixA, MatrixMath_s* matrixB,
+                         MatrixMath_s* resultMatrix) {
   int i, j;
   for (i = 0; i <3; i++) {
     for (j = 0; j < 3; j++) {
-      (*resultMatrix).arr[i * 3 + j]  = (*matrixA).arr[i * 3 + j] - (*matrixB).arr[i * 3 + j];
+      (*resultMatrix).arr[i * 3 + j]  = (*matrixA).arr[i * 3 + j]
+                                        - (*matrixB).arr[i * 3 + j];
     }
   }
 }
 
-void subtractionMatrices6x6(MatrixMath_s* matrixA, MatrixMath_s* matrixB, MatrixMath_s* resultMatrix) {
+void subtractionMatrices6x6(MatrixMath_s* matrixA, MatrixMath_s* matrixB,
+                            MatrixMath_s* resultMatrix) {
   int i, j;
   for (i = 0; i <6; i++) {
     for (j = 0; j < 6; j++) {
-      (*resultMatrix).arr[i * 6 + j]  = (*matrixA).arr[i * 6 + j] - (*matrixB).arr[i * 6 + j];
+      (*resultMatrix).arr[i * 6 + j]  = (*matrixA).arr[i * 6 + j]
+                                        - (*matrixB).arr[i * 6 + j];
     }
   }
 }
@@ -303,7 +332,12 @@ void inverse(MatrixMath_s* result) {
   (*result).arr[7] = a12*a31 - a11*a32;
   (*result).arr[8] = a11*a22 - a12*a21;
 
-  determinant = a11*a22*a33+a21*a32*a13+a31*a12*a23-a11*a32*a23-a31*a22*a13-a21*a12*a33;
+  determinant = a11 * a22 * a33
+                + a21 * a32 * a13
+                + a31 * a12 * a23
+                - a11 * a32 * a23
+                - a31 * a22 * a13
+                - a21 * a12 * a33;
   multiplyScalar(1/determinant, result);
 }
 
@@ -330,7 +364,12 @@ void inverseMatrix(MatrixMath_s* result) {
   (*result).arr[7] = a12*a31 - a11*a32;
   (*result).arr[8] = a11*a22 - a12*a21;
 
-  determinant = a11*a22*a33+a21*a32*a13+a31*a12*a23-a11*a32*a23-a31*a22*a13-a21*a12*a33;
+  determinant = a11 * a22 * a33
+                + a21 * a32 * a13
+                + a31 * a12 * a23
+                - a11 * a32 * a23
+                - a31 * a22 * a13
+                - a21 * a12 * a33;
   multiplyScalar(1/determinant, result);
 }
 

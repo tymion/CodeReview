@@ -1,7 +1,7 @@
 #ifndef HEADER_MATH_PACK_H_
 #define HEADER_MATH_PACK_H_
 
-#include "header/structurs.h"
+#include "structurs.h"
 
 double factorial(double f);
 

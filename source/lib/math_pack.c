@@ -1,4 +1,5 @@
-#include "header/math_pack.h"
+#include "math_pack.h"
+#include <math.h>
 
 #define M_PI 3.14159265358979323846
 
@@ -215,10 +216,11 @@ void subtractionMatrices6x6(MatrixMath_s* matrixA, MatrixMath_s* matrixB,
 
 void transpose(MatrixMath_s* matrixA) {
   MatrixMath_s tmp = {
-    {0, 0, 0,
-     0, 0, 0,
-     0, 0, 0},
-     3, 3
+    .arr = { 0, 0, 0,
+             0, 0, 0,
+             0, 0, 0 },
+    .row = 3,
+    .col = 3
   };
   int i, k;
   for (i = 0; i < 3; i++) {
@@ -256,13 +258,15 @@ void transpose_al(MatrixMath_s* matrixA) {
 
 void transpose6x6(MatrixMath6x6_s* matrixA) {
   MatrixMath6x6_s tmp = {
-    {0, 0, 0, 0, 0, 0,
-     0, 0, 0, 0, 0, 0,
-     0, 0, 0, 0, 0, 0,
-     0, 0, 0, 0, 0, 0,
-     0, 0, 0, 0, 0, 0,
-     0, 0, 0, 0, 0, 0},
-     6, 6
+    .arr = { 0, 0, 0, 0, 0, 0,
+             0, 0, 0, 0, 0, 0,
+             0, 0, 0, 0, 0, 0,
+             0, 0, 0, 0, 0, 0,
+             0, 0, 0, 0, 0, 0,
+             0, 0, 0, 0, 0, 0
+           },
+    .row = 6,
+    .col = 6
   };
   int i, k;
   for (i = 0; i < 6; i++) {
@@ -277,16 +281,17 @@ void transpose6x6(MatrixMath6x6_s* matrixA) {
 
 void transpose9x6(MatrixMath9x6_s* matrixA) {
   MatrixMath9x6_s tmp = {
-    {0, 0, 0, 0, 0, 0,
-     0, 0, 0, 0, 0, 0,
-     0, 0, 0, 0, 0, 0,
-     0, 0, 0, 0, 0, 0,
-     0, 0, 0, 0, 0, 0,
-     0, 0, 0, 0, 0, 0,
-     0, 0, 0, 0, 0, 0,
-     0, 0, 0, 0, 0, 0,
-     0, 0, 0, 0, 0, 0},
-     9, 6
+    .arr = { 0, 0, 0, 0, 0, 0,
+             0, 0, 0, 0, 0, 0,
+             0, 0, 0, 0, 0, 0,
+             0, 0, 0, 0, 0, 0,
+             0, 0, 0, 0, 0, 0,
+             0, 0, 0, 0, 0, 0,
+             0, 0, 0, 0, 0, 0,
+             0, 0, 0, 0, 0, 0,
+             0, 0, 0, 0, 0, 0 },
+    .row = 9,
+    .col = 6
   };
   int i, k;
   if ((*matrixA).row == 6) {
@@ -403,40 +408,46 @@ void skew(MatrixMath_s inputMatrix, MatrixMath_s* resultMatrix) {
 
 void q2m(Quaternion_s q, MatrixMath_s* result) {
   MatrixMath_s temp_result1 = {
-    {0, 0, 0,
-     0, 0, 0,
-     0, 0, 0},
-     3, 3
+    .arr = { 0, 0, 0,
+             0, 0, 0,
+             0, 0, 0 },
+    .row = 3,
+    .col = 3
   };
   MatrixMath_s temp_1 = {
-    {1, 0, 0,
-     0, 1, 0,
-     0, 0, 1},
-    3, 3
+    .arr = { 1, 0, 0,
+             0, 1, 0,
+             0, 0, 1 },
+    .row = 3,
+    .col = 3
   };
   MatrixMath_s temp_2 = {
-    {0, 0, 0,
-     0, 0, 0,
-     0, 0, 0},
-     3, 3
+    .arr = { 0, 0, 0,
+             0, 0, 0,
+             0, 0, 0 },
+    .row = 3,
+    .col = 3
   };
   MatrixMath_s temp_3 = {
-    {0, 0, 0,
-     0, 0, 0,
-     0, 0, 0},
-     3, 3
+    .arr = { 0, 0, 0,
+             0, 0, 0,
+             0, 0, 0 },
+     .row = 3,
+     .col = 3
   };
   MatrixMath_s q_1_3 = {
-    {0, 0, 0,
-     0, 0, 0,
-     0, 0, 0},
-     3, 1
+    .arr = { 0, 0, 0,
+             0, 0, 0,
+             0, 0, 0 },
+    .row = 3,
+    .col = 1
   };
   MatrixMath_s q_1_3_trans = {
-    {0, 0, 0,
-     0, 0, 0,
-     0, 0, 0},
-     1, 3
+    .arr = { 0, 0, 0,
+             0, 0, 0,
+             0, 0, 0 },
+    .row = 1,
+    .col = 3
   };
   double temp_var_1 = 0;
   double temp_var_2 = 0;

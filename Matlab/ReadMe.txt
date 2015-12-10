@@ -1,0 +1,2 @@
+1. W funkcji simulationParameters.m zmieniæ œcie¿kê do folderu z plikami programu symulacyjnego - zmienna 'files_path'
+2. W skrypcie RunSimulation.m wpisaæ œcie¿kê z pkt. 1 w nawiasie w komendzie addpath(genpath(SciezkaZpktu1))

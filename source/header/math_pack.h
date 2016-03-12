@@ -37,9 +37,9 @@ void multiplyMatrices9x6and9x9(MatrixMath9x6_s* matrixA,
                                MatrixMath9x9_s* matrixB,
                                MatrixMath9x6_s* resultMatrix);
 
-void multiplyMatrixmatrixByQuaternion(MatrixMath4x4_s* matrixA,
-                                      Quaternion_s* q,
-                                      Quaternion_s* result);
+void multiplyMatrixByQuaternion(MatrixMath4x4_s* matrixA,
+                                Quaternion_s* q,
+                                Quaternion_s* result);
 
 void addingMatrices(MatrixMath_s* matrixA, MatrixMath_s* matrixB,
                     MatrixMath_s* resultMatrix);

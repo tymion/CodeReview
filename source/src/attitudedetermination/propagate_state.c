@@ -1,3 +1,6 @@
+#include "attitude_determination.h"
+#include "math_pack.h"
+
 void PropagateState(MatrixMath7x1_s* result, MatrixMath7x1_s z, MatrixMath_s ctrlTorque_prev, MatrixMath_s Inertia_ref ) {
   MatrixMath_s angrate = {
     {0, 0, 0,

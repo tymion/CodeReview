@@ -1,4 +1,8 @@
-#include "../data/igrf_data.c"
+#include "geomagnetic_field.h"
+#include "igrf_data.h"
+#include "math_pack.h"
+#include <math.h>
+
 void Igrf(igrf_output* igrf_result, double t, MatrixMath_s r_eci, datetime dt, double igrf_order) {
   MatrixMath_s A_i2e = {
     {0, 0, 0,

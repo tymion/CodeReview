@@ -1,13 +1,19 @@
+#include "attitude_determination.h"
+#include "math_pack.h"
+
 void EkfSunVector(MatrixMath7x1_s* result7x1, MatrixMath6x6_s* result6x6, MatrixMath9x1_s* result9x1, MatrixMath9x9_s* result9x9,
-                           MatrixMath7x1_s X_k, MatrixMath6x6_s P_k, MatrixMath9x1_s Z, double eclipse, MatrixMath_s b_eci, MatrixMath_s r_e2s_eci,
-                           double time_step, MatrixMath9x9_s KalmanCovariance_R, MatrixMath6x6_s KalmanCovariance_Q, MatrixMath_s Inertia_ref,
-                           MatrixMath_s ctrlTorque_prev) {
+                  MatrixMath7x1_s X_k, MatrixMath6x6_s P_k, MatrixMath9x1_s Z, double eclipse, MatrixMath_s b_eci,
+                  MatrixMath_s r_e2s_eci, double time_step, MatrixMath9x9_s KalmanCovariance_R, MatrixMath6x6_s KalmanCovariance_Q,
+                  MatrixMath_s Inertia_ref, MatrixMath_s ctrlTorque_prev) {
+/*
+ * Is this needed ?
   Quaternion_s q_k = {{
     X_k.arr[0],
     X_k.arr[1],
     X_k.arr[2],
     X_k.arr[3],
   }};
+*/
 
   MatrixMath_s angrate_k = {{
     X_k.arr[4], 0, 0,
@@ -86,11 +92,11 @@ void EkfSunVector(MatrixMath7x1_s* result7x1, MatrixMath6x6_s* result6x6, Matrix
   MatrixMath6x6_s P_predict = {{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, 6, 6};
   MatrixMath_s A_i2sPredict = {{0, 0, 0, 0, 0, 0, 0, 0, 0}, 3, 3};
   MatrixMath_s magFieldPredict = {{0, 0, 0, 0, 0, 0, 0, 0, 0}, 3, 1};
-  MatrixMath_s magFieldMeas = {{0, 0, 0, 0, 0, 0, 0, 0, 0}, 3, 1};
+//  MatrixMath_s magFieldMeas = {{0, 0, 0, 0, 0, 0, 0, 0, 0}, 3, 1};
   MatrixMath_s sunVectorPredict = {{0, 0, 0, 0, 0, 0, 0, 0, 0}, 3, 1};
-  MatrixMath_s sunVectorMeas = {{0, 0, 0, 0, 0, 0, 0, 0, 0}, 3, 1};
-  MatrixMath_s angratePredict = {{0, 0, 0, 0, 0, 0, 0, 0, 0}, 3, 1};
-  MatrixMath_s angrateMeas = {{0, 0, 0, 0, 0, 0, 0, 0, 0}, 3, 1};
+//  MatrixMath_s sunVectorMeas = {{0, 0, 0, 0, 0, 0, 0, 0, 0}, 3, 1};
+//  MatrixMath_s angratePredict = {{0, 0, 0, 0, 0, 0, 0, 0, 0}, 3, 1};
+//  MatrixMath_s angrateMeas = {{0, 0, 0, 0, 0, 0, 0, 0, 0}, 3, 1};
   MatrixMath_s skewMagFieldPredict = {{0, 0, 0, 0, 0, 0, 0, 0, 0}, 3, 3};
   MatrixMath_s skewSunVectorPredict = {{0, 0, 0, 0, 0, 0, 0, 0, 0}, 3, 3};
   MatrixMath9x6_s H = {{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, 9, 6};
@@ -98,9 +104,9 @@ void EkfSunVector(MatrixMath7x1_s* result7x1, MatrixMath6x6_s* result6x6, Matrix
   MatrixMath9x6_s resCov_tmp1 = {{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, 9, 6};
   MatrixMath9x9_s resCov_tmp2 = {{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, 9, 9};
   MatrixMath9x9_s resCov = {{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, 9, 9};
-  MatrixMath9x9_s K_tmpInverse = {{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, 9, 9};
+//  MatrixMath9x9_s K_tmpInverse = {{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, 9, 9};
   MatrixMath9x6_s K_tmp1 = {{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, 6, 9};
-  MatrixMath9x9_s K = {{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, 6, 9};
+//  MatrixMath9x9_s K = {{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, 6, 9};
 
   PropagateState(&k1, X_k, ctrlTorque_prev, Inertia_ref);
 
@@ -176,11 +182,13 @@ void EkfSunVector(MatrixMath7x1_s* result7x1, MatrixMath6x6_s* result6x6, Matrix
 
   multiplyMatrices(&A_i2sPredict, &b_eci, &magFieldPredict);
 
+  multiplyMatrices(&A_i2sPredict, &r_e2s_eci, &sunVectorPredict);
+
+/*
+ * Is this needed ??
   magFieldMeas.arr[0] = Z.arr[0];
   magFieldMeas.arr[3] = Z.arr[1];
   magFieldMeas.arr[6] = Z.arr[2];
-
-  multiplyMatrices(&A_i2sPredict, &r_e2s_eci, &sunVectorPredict);
   if (eclipse == 0) {
     sunVectorMeas.arr[0] = Z.arr[3];
     sunVectorMeas.arr[3] = Z.arr[4];
@@ -196,6 +204,7 @@ void EkfSunVector(MatrixMath7x1_s* result7x1, MatrixMath6x6_s* result6x6, Matrix
   angrateMeas.arr[0] = Z.arr[6];
   angrateMeas.arr[3] = Z.arr[7];
   angrateMeas.arr[6] = Z.arr[8];
+*/
 
   skew(magFieldPredict, &skewMagFieldPredict);
   skew(sunVectorPredict, &skewSunVectorPredict);

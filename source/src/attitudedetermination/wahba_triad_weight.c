@@ -1,5 +1,10 @@
-void WahbaTriadWeight(MatrixMath_s* result, MatrixMath_s b1, MatrixMath_s b2, MatrixMath_s r1, MatrixMath_s r2,
-                                   double sigmaWahba_b1, double sigmaWahba_b2, double sigmaWahba_r1, double sigmaWahba_r2) {
+#include "attitude_determination.h"
+#include "math_pack.h"
+#include <math.h>
+
+void WahbaTriadWeight(MatrixMath_s* result, MatrixMath_s b1, MatrixMath_s b2, MatrixMath_s r1,
+                      MatrixMath_s r2, double sigmaWahba_b1, double sigmaWahba_b2,
+                      double sigmaWahba_r1, double sigmaWahba_r2) {
   MatrixMath_s skewb = {
     {0, 0, 0,
      0, 0, 0,

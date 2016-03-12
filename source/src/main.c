@@ -2,12 +2,12 @@
 #include <stdlib.h>
 #include <string.h>
 #include <math.h>
-#include "header/main.h"
-#include "header/math_pack.h"
-#include "header/debug_pack.h"
-#include "header/geomagnetic_field.h"
-#include "header/control.h"
-#include "header/attitude_determination.h"
+#include "main.h"
+#include "math_pack.h"
+#include "debug_pack.h"
+#include "geomagnetic_field.h"
+#include "control.h"
+#include "attitude_determination.h"
 
 int main(void) {
   system("cls");

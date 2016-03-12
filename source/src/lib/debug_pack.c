@@ -1,3 +1,6 @@
+#include "debug_pack.h"
+#include <stdio.h>
+
 void displayQuaternion(Quaternion_s* A) {
   printf("\n\n displayQuaternion:\n");
   int i;

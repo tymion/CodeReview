@@ -1,6 +1,22 @@
-void SunPointingRaw(MatrixMath_s* dipoleComm, MatrixMath_s angrate_s, MatrixMath_s b_sEst,
-                               MatrixMath_s sun_vec_meas, MatrixMath_s Inertia_ref, ctrlgains_s* ctrlgains,
-                               MatrixMath_s angrate) {
+#include "control.h"
+#include "math_pack.h"
+#include <math.h>
+
+void SunPointingKF(MatrixMath_s* dipoleComm, MatrixMath_s angrate_s, MatrixMath_s r_e2s,
+                   Quaternion_s qEst, MatrixMath_s b_sEst, MatrixMath_s Inertia_ref,
+                   ctrlgains_s* ctrlgains, MatrixMath_s angrate) {
+  MatrixMath_s A_i2s = {
+    {0, 0, 0,
+     0, 0, 0,
+     0, 0, 0},
+    3, 3
+  };
+  MatrixMath_s angrate_comm_s = {
+    {0, 0, 0,
+     0, 0, 0,
+     0, 0, 0},
+    3, 1
+  };
   MatrixMath_s K_error_temp = {
     {0, 0, 0,
      0, 0, 0,
@@ -44,18 +60,20 @@ void SunPointingRaw(MatrixMath_s* dipoleComm, MatrixMath_s angrate_s, MatrixMath
     3, 3
   };
   double P_error = 0;
-  double angrate_comm_norm = vectorNorm(&angrate);
-  double bnorm = vectorNorm(&b_sEst);
 
-  /* angular momentum error */
-  multiplyScalar(angrate_comm_norm, &sun_vec_meas);
-  subtractionMatrices(&sun_vec_meas, &angrate_s, &K_error_temp);
+  double bnorm = vectorNorm(&b_sEst);
+  double angrate_comm_norm = vectorNorm(&angrate);
+
+  q2m(qEst, &A_i2s);
+
+  multiplyScalar(angrate_comm_norm, &A_i2s);
+  multiplyMatrices(&A_i2s, &r_e2s, &angrate_comm_s);
+
+  subtractionMatrices(&angrate_comm_s, &angrate_s, &K_error_temp);
   multiplyMatrices(&Inertia_ref, &K_error_temp, &K_error);
 
-  /* precession error */
   P_error = Inertia_ref.arr[0] * (angrate_comm_norm - angrate_s.arr[0]);
 
-  /* control law */
   multiplyScalar((*ctrlgains).k, &K_error);
 
   multiplyScalar((*ctrlgains).kp*P_error, &kp_temp);
